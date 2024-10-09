@@ -13,6 +13,8 @@ class Blackjack:
         self.deck.shuffle()
         self.player_hand.add_card(self.deck.deal())
         self.dealer_hand.add_card(self.deck.deal())
+
+    def start_game1(self):
         self.player_hand.add_card(self.deck.deal())
         self.dealer_hand.add_card(self.deck.deal())
 

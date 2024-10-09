@@ -1,4 +1,5 @@
 import discord
+import datetime
 from discord import app_commands
 from discord.ext import commands
 from discord import PCMVolumeTransformer
@@ -40,9 +41,7 @@ class MusicBot(commands.Cog):
             channel = interaction.user.voice.channel
             if not interaction.guild.voice_client:
                 await channel.connect()
-                # Starte die Überwachung des Sprachkanals
-                self.check_voice_channel_task = self.bot.loop.create_task(self.check_voice_channel(channel))
-
+                
             return interaction.guild.voice_client
         else:
             await interaction.response.send_message("Du musst in einem Sprachkanal sein, um diesen Befehl zu verwenden.", ephemeral=True)
@@ -163,7 +162,7 @@ class MusicBot(commands.Cog):
         no_button.callback = lambda interaction: vote_callback(interaction, "no")
 
         # Abstimmung nach 30 Sekunden beenden
-        await discord.utils.sleep_until(discord.utils.utcnow() + discord.timedelta(seconds=30))
+        await discord.utils.sleep_until(discord.utils.utcnow() + datetime.timedelta(seconds=30))
         view.stop()
 
     # /stop

@@ -15,13 +15,17 @@ class BlackjackCog(commands.Cog):
         # Starts the game
         current_game = Blackjack()
         current_game.start_game()
+        dealer_first_card = current_game.dealer_hand.get_value()
+        current_game.start_game1()
 
         # Sends the first embed
         embed = discord.Embed(
             title="Blackjack - Spiel gestartet!",
-            description=f"Deine Hand: {current_game.refresh()} [Wert: {current_game.player_hand.get_value()}]",
             color=discord.Color.green()
         )
+        embed.add_field(name="Deine Hand", value=f"{current_game.player_hand.get_value()}", inline=True)
+        embed.add_field(name="Dealer", value=f"{dealer_first_card}", inline=True)
+
         await interaction.response.send_message(embed=embed, view=BlackjackButtons())
 
 # Buttons
@@ -47,9 +51,10 @@ class BlackjackButtons(discord.ui.View):
         else:
             embed = discord.Embed(
                 title="Blackjack - Neue Karte!",
-                description=f"Deine Hand: {current_game.refresh()} [Wert: {current_game.player_hand.get_value()}]",
                 color=discord.Color.green()
             )
+            embed.add_field(name="Deine Hand", value=f"{current_game.player_hand.get_value()}", inline=True)
+
             await interaction.response.edit_message(embed=embed, view=self)
 
     # Ends the game
@@ -60,6 +65,9 @@ class BlackjackButtons(discord.ui.View):
             description=f"Ergebnis: {'Gewonnen' if result['iswon'] else 'Verloren'}",
             color=discord.Color.red() if not result['iswon'] else discord.Color.green()
         )
+        embed.add_field(name="Deine Hand", value=f"{current_game.player_hand.get_value()}", inline=True)
+        embed.add_field(name="Dealer", value=f"{current_game.dealer_hand.get_value()}", inline=True)
+
         await interaction.response.edit_message(embed=embed, view=self)  # Aktualisiert die ursprüngliche Nachricht
 
 # Loads the Slash command
