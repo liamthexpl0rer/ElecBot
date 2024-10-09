@@ -1,4 +1,4 @@
-#!/root/VSCode/ElecBot/bot-env/bin/python3
+#!/home/jlk/VSCode/ElecBot_py/bot-env/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
