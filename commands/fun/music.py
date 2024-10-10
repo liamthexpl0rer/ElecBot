@@ -85,7 +85,11 @@ class MusicBot(commands.Cog):
             source = discord.FFmpegPCMAudio(url, before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5")
             source = PCMVolumeTransformer(source, volume=self.volume)  # Lautstärkesteuerung hinzufügen
             voice_client.play(source, after=lambda _: self.bot.loop.create_task(self.check_queue(interaction, voice_client)))
-            await interaction.followup.send(f"**Spielt jetzt:** `{title}`")
+
+            # Embed erstellen und ausgeben
+            embed = discord.Embed(title="💿 Spielt Jetzt", color=discord.Color.blue())
+            embed.add_field(name="Titel", value=f"{title}", inline=True)
+            await interaction.followup.send(embed=embed)
 
     # Überprüfen, ob die Warteschlange abgearbeitet werden muss
     async def check_queue(self, interaction, voice_client):
@@ -94,7 +98,10 @@ class MusicBot(commands.Cog):
             source = discord.FFmpegPCMAudio(next_song[0], before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5")
             source = PCMVolumeTransformer(source, volume=self.volume)  # Lautstärkesteuerung hinzufügen
             voice_client.play(source, after=lambda _: self.bot.loop.create_task(self.check_queue(interaction, voice_client)))
-            await interaction.channel.send(f"**Spielt jetzt:** `{next_song[1]}`")
+
+            # Embed erstellen und
+            embed = discord.Embed(title="💿 Spielt Jetzt", description=f"`{next_song[1]}`", color=discord.Color.blue())
+            await interaction.channel.send(embed=embed)
 
     # /skip
     @app_commands.command(name="skip", description="Leitet eine Abstimmung zum Überspringen des aktuellen Songs ein.")
