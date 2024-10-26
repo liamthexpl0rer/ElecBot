@@ -2,6 +2,13 @@ import time
 import discord
 from discord.ui import View
 
+import os
+from dotenv import load_dotenv
+
+# Lade die .env Datei
+load_dotenv()
+supportrole_id = os.getenv('SUPPORTROLE_ID')
+
 class TicketThread:
     def __init__(self, interaction: discord.Interaction):
         self.interaction = interaction
@@ -30,6 +37,8 @@ class TicketThread:
 
         # Erstelle ein Ticket und sende die Embeds
         await self.thread.add_user(self.interaction.user)
+        if supportrole_id is not "":
+            await self.thread.send(f"<@&{supportrole_id}>")
         await self.thread.send(embed=ticketembed, view=ticketview)
 
     async def close_thread(self, interaction: discord.Interaction):
