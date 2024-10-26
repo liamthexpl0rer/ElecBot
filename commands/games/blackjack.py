@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-from .bj_classes.game import Blackjack
+from modules.blackjack.game import Blackjack
 
 class BlackjackCog(commands.Cog):
     def __init__(self, bot):
