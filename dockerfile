@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.14-slim
+FROM python:3.12-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Define environment variable
-ENV NAME ElecBot
+ENV NAME=ElecBot
 
 # Run app.py when the container launches
 CMD ["python", "bot.py"]

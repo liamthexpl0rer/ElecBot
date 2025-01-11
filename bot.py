@@ -2,11 +2,9 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import os
-from dotenv import load_dotenv
 
 # Lade die .env Datei
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.environ['DISCORD_TOKEN']
 
 # Definiere den Bot mit Standard-Intents
 intents = discord.Intents.default()
